@@ -23,14 +23,14 @@ Una librería como React se usa para proyectos pequeños o medianos y cuándo no
 
 ## Crear un proyecto con react
 Para crear un proyecto con React se recomienda utilizar **[Vite](https://vite.dev/)**. Anteriormente se ocupaba Create React App pero eso ya quedo en el pasado **(lo dice la misma documentación oficial de [React](https://es.react.dev/learn/installation).**
-![alt text](image-2.png)
+![alt text](images/create-react-app-obsoleto.png)
 
 Según la documentación oficial para crear un proyecto con Vite en la terminal escribimos:
 ```
 npm create vite@latest
 ```
 Nos pedirá el nombre del proyecto, seleccionar un framework (React) y el lenguaje a utilizar (JS en este ejemplo)
-![alt text](image-1.png)
+![alt text](images/crear-proyecto-terminal.png)
 
 Después corremos los comandos que nos muestra
 ```
@@ -43,10 +43,10 @@ Y para ejecutarlo escribimos
 ```
 npm run dev
 ```
->📝Para detener el proyecto presiona **`ctrl + c`**
+> Nota ⚠ Para detener el proyecto presiona **`ctrl + c`**
 
 Nos arroja un localhost y al abrirlo nos muestra lo siguiente:
-![alt text](image-3.png)
+![alt text](images/localhost-inicio.png)
 
 ## Reconocimiento de carpetas y archivos
 
