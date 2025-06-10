@@ -1,4 +1,4 @@
-# Apuntes del curso: "React19, Supabase, Zustand, Tanstack Query, TanStack Mutation, Hooks, Tailwind CSS"
+# Guía básica para entender React
 
 # Contenido
 - [¿Qué es React?](#qué-es-react)
