@@ -144,13 +144,15 @@ Los hooks (o ganchos) son funciones especiales que dan acceso a las funcionalida
 Los hooks más fundamentales de React son:
 - useState (el "superpoder" de recordar información): useState nos permite añadir un **estado** a los componentes de función. El estado es la memoria del componente, esto significa que tu componente puede guardar información y reaccione a los cambios. Algo importante que debemos saber es que esta memoria es temporal, por lo que si recargamos se pierde la información que tenia guardada el estado.
 Partes del useState:
-➡ **estado:** El estado va a ser el valor actual que se va a renderizar (mostrar).
-➡ **función:** La función va a actualizar el estado.
-➡ **useState (hook):** El nombre del hook que vamos a utilizar.
-➡ **valor:** El valor con el que empieza el estado. Este valor puede ser cero, booleano, texto, objetos, arrays, data, etc.
+   - **estado:** El estado va a ser el valor actual que se va a renderizar (mostrar).
+   - **función:** La función va a actualizar el estado.
+   - **useState (hook):** El nombre del hook que vamos a utilizar.
+   - **valor:** El valor con el que empieza el estado. Este valor puede ser cero, booleano, texto, objetos, arrays, data, etc.
+     
 ![Imagen que señala las partes que conforman al hook useState](images/partes-use-state.png)
+
 Para poder utilizar useState lo importamos de la siguiente manera:
 `import { useState } from "react";`
 
-  Ejemplo:
-  ![Código de ejemplo del hook useState](images/ejemplo-use-state.png)
+Ejemplo:<br>
+![Código de ejemplo del hook useState](images/ejemplo-use-state.png)
