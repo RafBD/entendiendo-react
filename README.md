@@ -7,7 +7,7 @@
 - [Crear un proyecto con React](#crear-un-proyecto-con-react)
 - [Reconocimiento de carpetas y archivos](#reconocimiento-de-carpetas-y-archivos)
 - [Diferencias entre export default y export const](#diferencias-entre-export-default-y-export-const)
-- [Los Hooks](#los-hooks)
+- [Hooks: useState y useEffect](#hooks-usestate-y-useeffect)
 
 ## ¿Qué es React?
 React es una librería o biblioteca que se utiliza para construir interfaces de usuario en **una sola página index.html**. React trabaja por medios de componentes, que son bloques de código reutilizables. Estos interactúan entre sí para crear interfaces de manera modular.
