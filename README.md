@@ -138,11 +138,14 @@ import { App, Header } from './App';
 **Entonces cuál debo usar**
 Si vas a exportar solo un componente principal por archivo, utiliza `export default` y para múltiples componentes, utiliza `export const`.
 
-## Los Hooks
+## Hooks: useState y useEffect 
 Los hooks (o ganchos) son funciones especiales que dan acceso a las funcionalidades internas de React. Es como si los hooks fueran "superpoderes" que le podemos dar a los componentes.
 
 Los hooks más fundamentales de React son:
-- useState (el "superpoder" de recordar información): useState nos permite añadir un **estado** a los componentes de función. El estado es la memoria del componente, esto significa que tu componente puede guardar información y reaccione a los cambios. Algo importante que debemos saber es que esta memoria es temporal, por lo que si recargamos se pierde la información que tenia guardada el estado.
+
+#### UseState (el "superpoder" de recordar información):
+useState nos permite añadir un **estado** a los componentes de función. El estado es la memoria del componente, esto significa que tu componente puede guardar información y reaccione a los cambios. Algo importante que debemos saber es que esta memoria es temporal, por lo que si recargamos se pierde la información que tenia guardada el estado.
+
 Partes del useState:
    - **estado:** El estado va a ser el valor actual que se va a renderizar (mostrar).
    - **función:** La función va a actualizar el estado.
@@ -156,3 +159,125 @@ Para poder utilizar useState lo importamos de la siguiente manera:
 
 Ejemplo:<br>
 ![Código de ejemplo del hook useState](images/ejemplo-use-state.png)
+
+#### UseEffect (el "superpoder" de realizar acciones después de renderizar): 
+useEffect nos permite ejecutar código cuando el componente se monta, se actualiza o se desmonta. Esto es crucial para manejar lo que llamamos "efectos secundarios", que son acciones que interactúan con el mundo exterior o no forman parte de la lógica de renderizado principal de tu componente. Piensa en useEffect como el lugar donde tu componente puede reaccionar a eventos externos o a cambios internos después de haberse mostrado en pantalla.
+
+¿En qué se suele utilizar?
+useEffect es el hook ideal para manejar operaciones que necesitan ocurrir en momentos específicos de la vida de un componente. Se usa comúnmente para:
+- Llamar a una API: Para obtener datos de un servidor web una vez que el componente se ha cargado.
+- Escuchar eventos: Para suscribirse a eventos del navegador (como redimensionar la ventana o clics globales).
+- Temporizadores: Para configurar setTimeout o setInterval (como en tu ejemplo del contador).
+- Sincronizar con localStorage: Para guardar o cargar datos que persisten en el navegador.
+- Limpiar suscripciones o temporizadores: Para liberar recursos cuando el componente se desmonta y evitar fugas de memoria.
+
+Partes del useEffect:
+useEffect tiene dos partes principales:
+- Función de efecto: Es el código que deseas ejecutar. Esta función se dispara después de cada renderizado del componente, a menos que especifiques lo contrario.
+- Array de dependencias (opcional): Este array es crucial para controlar cuándo se ejecuta tu efecto.
+  - Si el array está vacío (`[]`): El efecto se ejecuta solo una vez cuando el componente se monta por primera vez (ideal para llamadas a API iniciales o configuración de listeners).
+  - Si el array no está presente: El efecto se ejecuta después de cada renderizado del componente (lo que puede llevar a bucles infinitos si no se usa con cuidado).
+  - Si el array contiene variables (`[variable1, variable2]`): El efecto se ejecuta cuando el componente se monta y cada vez que alguna de esas variables cambia su valor.
+- Función de limpieza (`return () => {}`): Opcionalmente, la función que pasas a useEffect puede retornar otra función. React ejecutará esta función de "limpieza" justo antes de que el componente se desmonte, o antes de que el efecto se vuelva a ejecutar debido a un cambio en sus dependencias. Esto es vital para detener temporizadores, cancelar suscripciones, o limpiar recursos que ya no son necesarios.
+
+Ejemplo:
+![useEffect codigo de ejemplo](images/ejemplo-use-effect-codigo.png)
+
+
+## Map
+El método map() permite recorrer un arreglo y devolver algo nuevo por cada elemento.
+
+### ¿Cómo funciona?
+Imagina que tienes una lista de datos (como nombres de frutas). Con map(), puedes recorrer esa lista y, por cada dato, crear un componente o un elemento HTML que React pueda mostrar en tu aplicación.
+
+Ejemplo:
+```
+function App() {
+
+  const frutas = ['manzana', 'pera', 'platano']; // Nuestro array de datos
+
+  return (
+    <div>
+      {
+        // Usamos llaves {} para insertar JavaScript
+        frutas.map((item, index) => { // 'map' itera sobre cada fruta
+
+          return (
+            // Por cada fruta, devolvemos un <div>
+            <div key={index}> {/* ¡La 'key' es crucial en React! */}
+              {item} - {index}
+            </div>
+          );
+        })
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+- item: En cada "vuelta" del bucle, item representa el elemento actual del array frutas.
+  - Primera vuelta: 'manzana'
+  - Segunda vuelta: 'pera'
+  - Tercera vuelta: 'platano'
+
+- index: En cada vuelta del bucle index nos da la posición numérica (el índice) de ese item dentro del array.
+  - Para 'manzana', index es 0.
+  - Para 'pera', index es 1.
+  - Para 'platano', index es 2.
+
+- `<div key={index}>:` El atributo key es indispensable cuando renderizamos listas en React. Le da a cada elemento de la lista un identificador único, lo que ayuda a React a optimizar el rendimiento y a saber qué elementos han cambiado, se han añadido o eliminado. Aunque index funciona, la mejor práctica es usar un ID único de tus datos si lo tienes.
+- `{item} - {index}:` Dentro del div, mostramos el valor de la fruta (item) y su posición (index).
+
+## Router
+React al ser una librería centrada en interfaces no cuenta con una herramienta nativa para navegar entre diferentes páginas. Para añadir esta funcionalida, necesitamos una herramienta externa y la solución más popular es **React Router Dom**.
+
+#### Instalación de React Router Dom
+Para instalar react router dom utilizamos el siguiente comando: `npm i react-router-dom`
+
+#### Configuración Básica del Router
+Es una buena práctica organizar las rutas en un archivo separado para mantener el código limpio.
+
+1. Crea una nueva carpeta llamada `routers` dentro de `src`
+2. Dentro de `src/routers`, crea un archivo llamado `router.jsx`.
+
+```
+// Importamos los componentes de React Router Dom
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Importamos los componentes de nuestras "paginas"
+import { Home } from "../pages/Home";
+import { Login } from "../pages/Login";
+import { Page404 } from "../pages/Page404";
+
+// Definimos un componente que contendra todas las rutas
+export const MyRoutes = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />}/>
+      <Route path="/login" element={<Login />}/>
+      <Route path="*" element={<Page404 />}/>
+    </Routes>
+  </BrowserRouter>
+)
+```
+- `<BrowserRouter>`: Este es el componente principal que "envuelve" toda la aplicacion.
+- `<Routes>`: Funciona como un contenedor para todas tus rutas individuales (`<Route>`). La característica clave de `<Routes>` es que renderiza solo la primera `<Route>` que coincide con la URL actual, lo que evita que se rendericen múltiples rutas por accidente.
+- `<Route>`: Este componente define una ruta específica.
+  - `path`: Es la propiedad que especifica el camino (la URL) que debe coincidir para que esta ruta sea activa.
+  - `element`: Es la propiedad que recibe el componente de React que se renderizará cuando el path coincida, por ejemplo: `<Home />`.
+  
+#### Integrar rutas en la aplicacion
+Para que las rutas funciones, necesitas importar y renderizar tu componente `MyRoutes` en el archivo principal `App.jsx`.
+  
+Ejemplo en `App.jsx`:
+```
+import { MyRoutes } from "./routers/router";
+
+function App() {
+  return (
+    <MyRoutes />
+    );
+}
+export default App;
+```
