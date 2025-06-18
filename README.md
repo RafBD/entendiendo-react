@@ -94,7 +94,7 @@ Aunque ambas sirven para hacer que algo sea accesible desde otros archivos, func
 #### Export default
 Esta forma exporta una sola entidad como la exportación principal del archivo.
 Ejemplo>
-```
+```jsx
 function App() {
   return <h1>Hola Mundo</h1>
 }
@@ -102,7 +102,7 @@ function App() {
 export default App;
 ```
 Se importa sin llaves y puedes cambiar el nombre al importar:
-```
+```jsx
 import App from './App';
 -- o --
 import MiComponente from './App';
@@ -113,25 +113,25 @@ import MiComponente from './App';
 
 #### Export const
 Esta forma exporta una o varias exportaciones nombradas.
-```
+```jsx
 export const App = () => {
   return <h1>Hola Mundo</h1>
 }
 ```
 Se importa con llaves y debe usar el mismo nombre (o usar as para renombrar):
-```
+```jsx
 import { App } from './App';
 -- o --
 import { App as MiComponente } from './App';
 ```
 **Ventajas**
 Puedes exportar múltiples cosas desde un archivo. Por ejemplo:
-```
+```jsx
 export const App = () => <h1>Hola</h1>
 export const Header = () => <h2>Header</h2>
 ```
 Y luego para utilizarlo
-```
+```jsx
 import { App, Header } from './App';
 ```
 
@@ -157,8 +157,22 @@ Partes del useState:
 Para poder utilizar useState lo importamos de la siguiente manera:
 `import { useState } from "react";`
 
-Ejemplo:<br>
-![Código de ejemplo del hook useState](images/ejemplo-use-state.png)
+Ejemplo:
+```jsx
+import { useState } from 'react'
+
+export const Contador = () => {
+
+  const [numero, setNumero] = useState()
+
+  return (
+    <div>
+    <h1>Contador</h1>
+    <button>{numero}</button>
+    </div>
+  )
+}
+```
 
 #### UseEffect (el "superpoder" de realizar acciones después de renderizar): 
 useEffect nos permite ejecutar código cuando el componente se monta, se actualiza o se desmonta. Esto es crucial para manejar lo que llamamos "efectos secundarios", que son acciones que interactúan con el mundo exterior o no forman parte de la lógica de renderizado principal de tu componente. Piensa en useEffect como el lugar donde tu componente puede reaccionar a eventos externos o a cambios internos después de haberse mostrado en pantalla.
@@ -181,17 +195,51 @@ useEffect tiene dos partes principales:
 - Función de limpieza (`return () => {}`): Opcionalmente, la función que pasas a useEffect puede retornar otra función. React ejecutará esta función de "limpieza" justo antes de que el componente se desmonte, o antes de que el efecto se vuelva a ejecutar debido a un cambio en sus dependencias. Esto es vital para detener temporizadores, cancelar suscripciones, o limpiar recursos que ya no son necesarios.
 
 Ejemplo:
-![useEffect codigo de ejemplo](images/ejemplo-use-effect-codigo.png)
+```js
+import { useEffect, useState } from 'react'
 
+export const UseEffectPage = () => {
+  const [segundos, setSegundos] = useState(0)
+
+
+  useEffect(() => {
+    // 1. Aquí se configura el "efecto secundario": un temporizador que incrementa 'segundos'
+    const intervalo = setInterval(() => {
+      setSegundos((s) => s + 1); // La función para actualizar el estado 'segundos'
+    }, 1000);
+
+    // 2. Esta es la función de limpieza: Se ejecuta cuando el componente se desmonta
+    // o antes de que el efecto se vuelva a ejecutar si las dependencias cambiaran.
+    return () => clearInterval(intervalo); // Importante: detiene el temporizador para evitar fugas de memoria
+  }, []); // Array de dependencias vacío []: el efecto se ejecuta solo una vex al montar. Este siempre hay que ponerlo para evitas que se ejecute en cada renderizado.
+
+  // Función para reiniciar el contador (usa useState)
+  const reiniciarContador = () => {
+    setSegundos(0);
+  }
+
+  return (
+    <div>
+      <h2>UseEffectPage</h2>
+      <div>
+        <span>{segundos}</span>
+      </div>
+      <div>
+        <button onclick={reiniciarContador}>Reiniciar a cero</button>
+      </div>
+    </div>
+  );
+};
+```
 
 ## Map
-El método map() permite recorrer un arreglo y devolver algo nuevo por cada elemento.
+El método `map()` permite recorrer un arreglo y devolver algo nuevo por cada elemento.
 
 ### ¿Cómo funciona?
-Imagina que tienes una lista de datos (como nombres de frutas). Con map(), puedes recorrer esa lista y, por cada dato, crear un componente o un elemento HTML que React pueda mostrar en tu aplicación.
+Imagina que tienes una lista de datos (como nombres de frutas). Con `map()`, puedes recorrer esa lista y, por cada dato, crear un componente o un elemento HTML que React pueda mostrar en tu aplicación.
 
 Ejemplo:
-```
+```jsx
 function App() {
 
   const frutas = ['manzana', 'pera', 'platano']; // Nuestro array de datos
@@ -241,7 +289,7 @@ Es una buena práctica organizar las rutas en un archivo separado para mantener 
 1. Crea una nueva carpeta llamada `routers` dentro de `src`
 2. Dentro de `src/routers`, crea un archivo llamado `router.jsx`.
 
-```
+```jsx
 // Importamos los componentes de React Router Dom
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -271,7 +319,7 @@ export const MyRoutes = () => (
 Para que las rutas funciones, necesitas importar y renderizar tu componente `MyRoutes` en el archivo principal `App.jsx`.
   
 Ejemplo en `App.jsx`:
-```
+```jsx
 import { MyRoutes } from "./routers/router";
 
 function App() {
