@@ -397,3 +397,6 @@ El componente `<Outlet>` de React Router Dom es el marcador de posición donde s
 
 #### Propiedad index
 La propiedad index en una `<Route>` anidada significa que ese componente se renderizará cuando la ruta padre coincida exactamente, sin ninguna subruta adicional. Por ejemplo, en /dashboard, DashboardPage se renderizará dentro de DashboardLayout.
+
+## Authors
+- [@rafbd](https://github.com/RafBD)
