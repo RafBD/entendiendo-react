@@ -8,6 +8,8 @@
 - [Reconocimiento de carpetas y archivos](#reconocimiento-de-carpetas-y-archivos)
 - [Diferencias entre export default y export const](#diferencias-entre-export-default-y-export-const)
 - [Hooks: useState y useEffect](#hooks-usestate-y-useeffect)
+- [Map](#map)
+- [Router (rutas y rutas anidadas)](#router)
 
 ## ¿Qué es React?
 React es una librería o biblioteca que se utiliza para construir interfaces de usuario en **una sola página index.html**. React trabaja por medios de componentes, que son bloques de código reutilizables. Estos interactúan entre sí para crear interfaces de manera modular.
@@ -91,9 +93,9 @@ Si abrimos este archivo nos damos cuenta que trae una etiqueta propia de React `
 En React (y JavaScript en general), existen dos formas principales de exportar funciones, componentes o variables desde un archivo: export default y export const.
 Aunque ambas sirven para hacer que algo sea accesible desde otros archivos, funcionan de manera distinta y tienen usos diferentes.
 
-#### Export default
+### Export default
 Esta forma exporta una sola entidad como la exportación principal del archivo.
-Ejemplo>
+Ejemplo:
 ```jsx
 function App() {
   return <h1>Hola Mundo</h1>
@@ -111,7 +113,7 @@ import MiComponente from './App';
 - Solo puede haber una exportación por defecto por archivo.
 - Es más flexible al importar (puedes renombrar el componente sin usar as).
 
-#### Export const
+### Export const
 Esta forma exporta una o varias exportaciones nombradas.
 ```jsx
 export const App = () => {
@@ -143,7 +145,7 @@ Los hooks (o ganchos) son funciones especiales que dan acceso a las funcionalida
 
 Los hooks más fundamentales de React son:
 
-#### UseState (el "superpoder" de recordar información):
+### UseState (el "superpoder" de recordar información):
 useState nos permite añadir un **estado** a los componentes de función. El estado es la memoria del componente, esto significa que tu componente puede guardar información y reaccione a los cambios. Algo importante que debemos saber es que esta memoria es temporal, por lo que si recargamos se pierde la información que tenia guardada el estado.
 
 Partes del useState:
@@ -157,7 +159,7 @@ Partes del useState:
 Para poder utilizar useState lo importamos de la siguiente manera:
 `import { useState } from "react";`
 
-Ejemplo:
+##### Ejemplo:
 ```jsx
 import { useState } from 'react'
 
@@ -174,7 +176,7 @@ export const Contador = () => {
 }
 ```
 
-#### UseEffect (el "superpoder" de realizar acciones después de renderizar): 
+### UseEffect (el "superpoder" de realizar acciones después de renderizar): 
 useEffect nos permite ejecutar código cuando el componente se monta, se actualiza o se desmonta. Esto es crucial para manejar lo que llamamos "efectos secundarios", que son acciones que interactúan con el mundo exterior o no forman parte de la lógica de renderizado principal de tu componente. Piensa en useEffect como el lugar donde tu componente puede reaccionar a eventos externos o a cambios internos después de haberse mostrado en pantalla.
 
 ¿En qué se suele utilizar?
@@ -194,7 +196,7 @@ useEffect tiene dos partes principales:
   - Si el array contiene variables (`[variable1, variable2]`): El efecto se ejecuta cuando el componente se monta y cada vez que alguna de esas variables cambia su valor.
 - Función de limpieza (`return () => {}`): Opcionalmente, la función que pasas a useEffect puede retornar otra función. React ejecutará esta función de "limpieza" justo antes de que el componente se desmonte, o antes de que el efecto se vuelva a ejecutar debido a un cambio en sus dependencias. Esto es vital para detener temporizadores, cancelar suscripciones, o limpiar recursos que ya no son necesarios.
 
-Ejemplo:
+##### Ejemplo:
 ```js
 import { useEffect, useState } from 'react'
 
@@ -235,10 +237,10 @@ export const UseEffectPage = () => {
 ## Map
 El método `map()` permite recorrer un arreglo y devolver algo nuevo por cada elemento.
 
-### ¿Cómo funciona?
+#### ¿Cómo funciona?
 Imagina que tienes una lista de datos (como nombres de frutas). Con `map()`, puedes recorrer esa lista y, por cada dato, crear un componente o un elemento HTML que React pueda mostrar en tu aplicación.
 
-Ejemplo:
+##### Ejemplo:
 ```jsx
 function App() {
 
@@ -280,15 +282,16 @@ export default App;
 ## Router
 React al ser una librería centrada en interfaces no cuenta con una herramienta nativa para navegar entre diferentes páginas. Para añadir esta funcionalida, necesitamos una herramienta externa y la solución más popular es **React Router Dom**.
 
-#### Instalación de React Router Dom
+### Instalación de React Router Dom
 Para instalar react router dom utilizamos el siguiente comando: `npm i react-router-dom`
 
-#### Configuración Básica del Router
+### Configuración Básica del Router
 Es una buena práctica organizar las rutas en un archivo separado para mantener el código limpio.
 
 1. Crea una nueva carpeta llamada `routers` dentro de `src`
 2. Dentro de `src/routers`, crea un archivo llamado `router.jsx`.
 
+##### Ejemplo:
 ```jsx
 // Importamos los componentes de React Router Dom
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -315,7 +318,7 @@ export const MyRoutes = () => (
   - `path`: Es la propiedad que especifica el camino (la URL) que debe coincidir para que esta ruta sea activa.
   - `element`: Es la propiedad que recibe el componente de React que se renderizará cuando el path coincida, por ejemplo: `<Home />`.
   
-#### Integrar rutas en la aplicacion
+### Integrar rutas en la aplicacion
 Para que las rutas funciones, necesitas importar y renderizar tu componente `MyRoutes` en el archivo principal `App.jsx`.
   
 Ejemplo en `App.jsx`:
@@ -330,4 +333,67 @@ function App() {
 export default App;
 ```
 
-#### Rutas anidadas
+### Rutas anidadas
+Las rutas anidadas en React Router Dom te permiten definir jerarquías de rutas donde un componente padre puede renderizar componentes hijos basados en una parte de la URL. Esto es útil para diseños complejos como paneles de control o perfiles de usuario, donde una sección principal tiene varias subsecciones.
+
+Para crear rutas anidadas, simplemente anidas componentes `<Route>` dentro de un `<Route>` padre. El `path` del `<Route>` hijo será relativo al path del padre. El componente padre debe usar el componente `<Outlet>` de React Router Dom para renderizar los componentes hijos anidados.
+
+##### Ejemplo de Rutas Anidadas:
+Imagina que tienes una sección de "Dashboard" con subsecciones para "Perfil" y "Configuración".
+
+1. Define tus componentes de página:
+- `DashboardPage.jsx`
+- `ProfilePage.jsx`
+- `SettingsPage.jsx`
+
+Modifica tu archivo router.jsx:
+
+```jsx
+// Importamos los componentes necesarios de React Router Dom
+import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
+
+// Importamos los componentes de nuestras "páginas"
+import { Home } from "../pages/Home";
+import { Login } from "../pages/Login";
+import { Page404 } from "../pages/Page404";
+import { DashboardPage } from "../pages/DashboardPage";
+import { ProfilePage } from "../pages/ProfilePage";
+import { SettingsPage } from "../pages/SettingsPage";
+
+// Componente para el diseño del Dashboard (contendrá el Outlet)
+const DashboardLayout = () => {
+  return (
+    <div>
+      <h2>Dashboard Principal</h2>
+      {/* El Outlet renderiza el componente de la ruta anidada */}
+      <Outlet />
+    </div>
+  );
+};
+
+export const MyRoutes = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+
+      {/* Ruta padre del Dashboard */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* Rutas anidadas. La URL será /dashboard/profile y /dashboard/settings */}
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="settings" element={<SettingsPage />} />
+        {/* Ruta índice (opcional): se renderiza cuando el path es exactamente /dashboard */}
+        <Route index element={<DashboardPage />} />
+      </Route>
+
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  </BrowserRouter>
+)
+```
+
+#### ¿Cómo funciona Outlet?
+El componente `<Outlet>` de React Router Dom es el marcador de posición donde se renderizará el componente de la ruta hija que coincida. Cuando la URL es /dashboard/profile, DashboardLayout se renderiza, y dentro de él, donde está `<Outlet>`, se inserta ProfilePage.
+
+#### Propiedad index
+La propiedad index en una `<Route>` anidada significa que ese componente se renderizará cuando la ruta padre coincida exactamente, sin ninguna subruta adicional. Por ejemplo, en /dashboard, DashboardPage se renderizará dentro de DashboardLayout.
