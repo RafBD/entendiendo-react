@@ -10,6 +10,7 @@
 - [Hooks: useState y useEffect](#hooks-usestate-y-useeffect)
 - [Map](#map)
 - [Router: Rutas y Rutas Anidadas](#router)
+- [Authors](#authors)
 
 ## ¿Qué es React?
 React es una librería o biblioteca que se utiliza para construir interfaces de usuario en **una sola página index.html**. React trabaja por medios de componentes, que son bloques de código reutilizables. Estos interactúan entre sí para crear interfaces de manera modular.
